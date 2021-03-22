@@ -10,6 +10,14 @@ run:
 		-f devstack/docker-compose.yml \
 		run --rm jira-resolver
 
+
+.PHONY: run-d
+run-d:
+	docker-compose \
+		-f devstack/docker-compose.yml \
+		run --rm -d jira-resolver
+
+
 .PHONY: teardown
 teardown:
 	docker-compose \
