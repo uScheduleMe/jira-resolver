@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  jira-resolver:
+    build:
+      context: ..
+      dockerfile: devstack/Dockerfile
+    image: jira-resolver
+    env_file:
+      - ../.env
