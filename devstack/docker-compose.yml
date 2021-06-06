@@ -8,3 +8,4 @@ services:
     image: jira-resolver
     env_file:
       - ../.env
+    restart: unless-stopped
