@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ['3.6', '3.7', '3.8', '3.9']
+        python: ['3.7', '3.8', '3.9', '3.10', '3.11']
     name: Testing jira-resolver with python ${{ matrix.python }}
     steps:
       - uses: actions/checkout@v2
@@ -16,11 +16,17 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Install dependencies and script
-        run: pip install .[tests]
+      - name: Install and configure poetry
+        run: pip install poetry && poetry config virtualenvs.create false
+
+      - name: Install dependencies
+        run: poetry install
 
       - name: Lint with flake8
         run: flake8
 
       - name: Run static type analyzer
         run: mypy
+
+      - name: Run bandit 
+        run: bandit -r -c pyproject.toml
