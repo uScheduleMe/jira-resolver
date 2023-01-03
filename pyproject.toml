@@ -6,7 +6,7 @@ authors = ["Natalia Maximo <natalia@uschedule.me>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 discord-py = "^2.1.0"
 python-dotenv = "^0.21.0"
 
