@@ -1,0 +1,71 @@
+[tool.poetry]
+name = "jira-resolver"
+version = "0.1.0"
+description = ""
+authors = ["Natalia Maximo <natalia@uschedule.me>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+discord-py = "^2.1.0"
+python-dotenv = "^0.21.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+coverage = "^6.5.0"
+flake8 = "^6.0.0"
+mypy = "^0.991"
+black = "^22.10.0"
+Flake8-pyproject = "^1.2.1"
+pytest-sugar = "^0.9.6"
+pytest-cov = "^4.0.0"
+pytest-xdist = "^3.0.2"
+bandit = {extras = ["toml"], version = "^1.7.4"}
+pydocstyle = "^6.1.1"
+
+[tool.poetry.scripts]
+jira-resolver = "jira_resolver.bot:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "unit"
+]
+addopts = "--cov=src --cov-report=term-missing"
+
+[tool.flake8]
+exclude = ".git,__pycache__,dist,build,debian,*.egg,*.egg-info,*.venv,*.archive,migrations"
+max-line-length = 88
+filename = "*.py"
+max-complexity = 10
+
+[tool.mypy]
+files = ["src/**/*.py"]
+# Leaving these commented out for compatibility with current configs,
+# will make sure to fix everything we need to run these configs in the future.
+
+# plugins = ["pydantic.mypy"]
+# ignore_missing_imports = true
+# follow_imports = "silent"
+# warn_redundant_casts = true
+# warn_unused_ignores = true
+# disallow_any_generics = true
+# check_untyped_defs = true
+# no_implicit_reexport = true
+# for strict mypy: (this is the tricky one :-))
+# disallow_untyped_defs = true
+
+# [tool.pydantic-mypy]
+# init_forbid_extra = true
+# init_typed = true
+# warn_required_dynamic_aliases = true
+# warn_untyped_fields = true
+
+[tool.bandit]
+exclude_dirs = ['tests']
+targets = ['src']
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

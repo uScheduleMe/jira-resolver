@@ -3,16 +3,21 @@ from discord.ext import commands  # type: ignore
 
 import jira_resolver.config as cfg
 
+from typing import (
+    List,
+)
+
 
 intents = discord.Intents()
 intents.guild_messages = True
 
 bot = commands.Bot(
-    command_prefix='!',
-    description='''
+    command_prefix="!",
+    description="""
     A bot to post the links to tickets that are mentioned in-line
     in discord messages
-    '''
+    """,
+    intents=intents,
 )
 
 
@@ -28,17 +33,20 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_message(msg: discord.Message):
+    if bot.user is None:
+        raise Exception("Bot user is None")
+
     if msg.author.id == bot.user.id:
         return
 
     if cfg.ticket_regex.search(msg.content):
         matches = cfg.ticket_regex.findall(msg.content)
-        links = []
+        links: List[str] = []
 
         for ticket in matches:
-            links.append(f'<{cfg.jira_prefix}{ticket}>')
+            links.append(f"<{cfg.jira_prefix}{ticket}>")
 
-        await msg.reply('\n'.join(links))
+        await msg.reply("\n".join(links))
 
 
 def main():
