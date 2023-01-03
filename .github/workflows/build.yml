@@ -29,4 +29,4 @@ jobs:
         run: mypy
 
       - name: Run bandit 
-        run: bandit -r -c pyproject.toml
+        run: bandit -r -c pyproject.toml .
