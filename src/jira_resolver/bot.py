@@ -3,6 +3,10 @@ from discord.ext import commands  # type: ignore
 
 import jira_resolver.config as cfg
 
+from typing import (
+    List,
+)
+
 
 intents = discord.Intents()
 intents.guild_messages = True
@@ -37,7 +41,7 @@ async def on_message(msg: discord.Message):
 
     if cfg.ticket_regex.search(msg.content):
         matches = cfg.ticket_regex.findall(msg.content)
-        links: list[str] = []
+        links: List[str] = []
 
         for ticket in matches:
             links.append(f"<{cfg.jira_prefix}{ticket}>")
