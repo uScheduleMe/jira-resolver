@@ -7,7 +7,7 @@ help: ## Print this help message and exit
 	@awk -F ':|##' \
 		'/^[^\t].+?:.*?##/ {\
 			printf "  %-30s %s\n", $$1, $$NF \
-		 }' $(MAKEFILE_LIST)
+		}' $(MAKEFILE_LIST)
 
 .PHONY: bd
 bd: ## Build the docker service
@@ -25,7 +25,13 @@ run: ## Run the service in the foreground
 run-d: ## Run the service in detached mode (background)
 	@docker-compose \
 		-f devstack/docker-compose.yml \
-		run --rm -d jira-resolver
+		up -d
+
+.PHONY: stop
+stop: ## Run the service in detached mode (background)
+	@docker-compose \
+		-f devstack/docker-compose.yml \
+		rm --stop --force -v
 
 .PHONY: teardown
 teardown: ## Teardown the docker service
